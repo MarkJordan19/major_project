@@ -1,0 +1,4 @@
+src/features/rooms/hooks.ts(2,10): error TS2305: Module '"./api"' has no exported member 'getAllRooms'.
+src/pages/dashboard/Dashboard.tsx(33,154): error TS2339: Property 'length' does not exist on type '{}'.
+src/pages/rooms/Rooms.tsx(75,21): error TS2339: Property 'map' does not exist on type '{}'.
+src/pages/rooms/Rooms.tsx(75,26): error TS7006: Parameter 'room' implicitly has an 'any' type.

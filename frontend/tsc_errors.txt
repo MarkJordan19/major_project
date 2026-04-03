@@ -1,0 +1,19 @@
+src/components/layout/Navbar.tsx(1,10): error TS2459: Module '"../../context/AuthContext"' declares 'useAuth' locally, but it is not exported.
+src/components/ui/EmptyState.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/features/auth/api.ts(2,10): error TS1484: 'AuthResponse' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/features/auth/api.ts(2,24): error TS1484: 'User' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/features/auth/hooks.ts(3,10): error TS1484: 'User' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/features/enquiries/api.ts(2,10): error TS1484: 'Enquiry' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/features/enquiries/api.ts(2,19): error TS1484: 'CreateEnquiryPayload' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/features/images/api.ts(2,10): error TS1484: 'DesignImage' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/features/images/api.ts(2,23): error TS1484: 'CreateImagePayload' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/features/projects/api.ts(2,10): error TS1484: 'Project' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/features/projects/api.ts(2,19): error TS1484: 'CreateProjectPayload' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/features/projects/api.ts(2,41): error TS1484: 'UpdateProjectPayload' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/features/rooms/api.ts(2,10): error TS1484: 'Room' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/features/rooms/api.ts(2,16): error TS1484: 'CreateRoomPayload' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/features/rooms/api.ts(2,35): error TS1484: 'UpdateRoomPayload' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/features/testimonials/api.ts(2,10): error TS1484: 'Testimonial' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/features/testimonials/api.ts(2,23): error TS1484: 'CreateTestimonialPayload' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/pages/auth/Login.tsx(38,10): error TS2741: Property 'label' is missing in type '{ type: "email"; placeholder: string; value: string; onChange: (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => void; }' but required in type 'InputProps'.
+src/pages/auth/Login.tsx(45,10): error TS2741: Property 'label' is missing in type '{ type: "password"; placeholder: string; value: string; onChange: (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => void; }' but required in type 'InputProps'.
