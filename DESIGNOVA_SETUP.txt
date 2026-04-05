@@ -1,0 +1,431 @@
+
+Designova Setup Guide
+
+This guide explains how to run the project from scratch on a new laptop.
+
+It covers:
+- software to install
+- MySQL database setup
+- backend setup
+- frontend setup
+- admin login setup
+- commands to run the project
+- common errors and fixes
+
+1. Project Overview
+
+This project currently runs as two separate apps:
+
+1. frontend
+   - React + TypeScript + Vite
+   - runs the user interface
+   - default frontend URL: http://localhost:5173
+
+2. interior-design-nextjs
+   - Next.js app used as the backend API server
+   - handles authentication, CRUD APIs, and MySQL connection
+   - backend API base URL: http://localhost:3000/api
+
+Database schema file:
+- interior_design/database/schema.sql
+
+Important note:
+- The frontend is already configured to call the backend at http://localhost:3000/api
+- CORS is already configured to allow http://localhost:5173
+- so the easiest setup is:
+  - backend on port 3000
+  - frontend on port 5173
+
+2. Folder Structure
+
+Use these folders:
+
+major_project/
+|-- frontend/
+|-- interior-design-nextjs/
+|-- interior_design/
+|   |-- database/
+|       |-- schema.sql
+|-- SETUP_GUIDE_DESIGNOVA.md
+
+3. Software Required
+
+Install the following on your friend's laptop:
+
+3.1 Node.js
+
+Recommended:
+- Node.js 20.x or above
+
+Check installation:
+node -v
+npm -v
+
+3.2 MySQL
+
+Recommended:
+- MySQL Server 8.x
+- MySQL Workbench is optional but very helpful
+
+Check installation:
+mysql --version
+
+3.3 Code Editor
+
+Recommended:
+- Visual Studio Code
+
+4. Copy the Project
+
+You can move the project in either of these ways:
+
+Option A: Copy the full project folder
+Copy the complete major_project folder to the new laptop.
+
+Option B: Use Git
+If the code is in a Git repository:
+git clone <your-repo-url>
+cd major_project
+
+5. Database Setup
+
+This step is required before running the backend.
+
+5.1 Create the Database
+
+Open MySQL Workbench or MySQL command line and run:
+
+CREATE DATABASE interior_design_db;
+
+Then select it:
+
+USE interior_design_db;
+
+5.2 Import the Schema
+
+You have two ways to import the schema.
+
+Option A: Using MySQL Workbench
+1. Open MySQL Workbench
+2. Connect to your local MySQL server
+3. Open the file:
+   major_project/interior_design/database/schema.sql
+4. Run the full script
+
+Option B: Using MySQL command line
+From PowerShell:
+
+mysql -u root -p interior_design_db < "C:\path\to\major_project\interior_design\database\schema.sql"
+
+Replace C:\path\to\major_project with the actual path on your friend's laptop.
+
+5.3 Tables Created by the Schema
+
+The current schema creates these tables:
+- users
+- projects
+- rooms
+- design_images
+- enquiries
+- testimonials
+
+Important note:
+- the current running code uses users for admin login
+- it does not use an admins table
+
+5.4 Create the Admin User
+
+After importing the schema, create the admin account manually.
+
+Run this SQL:
+
+INSERT INTO users (name, email, password_hash, role)
+VALUES (
+  'Admin',
+  'admin@interiordesign.com',
+  '$2b$12$NMWxnV.knehSdINkTIx1h.gA3Fj4IB2z3HlF6BaE9AcJdt3y0py7C',
+  'admin'
+);
+
+Admin login credentials:
+- Email: admin@interiordesign.com
+- Password: Admin&123!
+
+5.5 Verify the Admin Record
+
+Run:
+SELECT user_id, name, email, role FROM users;
+
+You should see the admin user in the result.
+
+6. Backend Setup
+
+The backend is in:
+- interior-design-nextjs
+
+6.1 Open Terminal in Backend Folder
+cd C:\path\to\major_project\interior-design-nextjs
+
+6.2 Install Dependencies
+npm install
+
+6.3 Create the Backend Environment File
+
+Inside interior-design-nextjs, create a file named:
+- .env.local
+
+Add this content:
+
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=YOUR_MYSQL_PASSWORD
+DB_NAME=interior_design_db
+JWT_SECRET=change-this-to-a-long-random-secret
+
+Replace:
+- YOUR_MYSQL_PASSWORD with the MySQL password on your friend's laptop
+- JWT_SECRET with any strong random secret
+
+Important:
+- use the same database name created earlier: interior_design_db
+- do not keep the old password from another machine
+
+6.4 Start the Backend
+
+Run the backend explicitly on port 3000:
+npm run dev -- --port 3000
+
+Expected result:
+- backend starts successfully
+- Next.js server runs on http://localhost:3000
+
+6.5 Backend Test URLs
+
+Open these in the browser after backend startup:
+- http://localhost:3000
+- http://localhost:3000/api/projects
+
+If the backend is working, the API route should return JSON.
+
+7. Frontend Setup
+
+The frontend is in:
+- frontend
+
+7.1 Open a Second Terminal
+Open a new terminal window and run:
+cd C:\path\to\major_project\frontend
+
+7.2 Install Dependencies
+npm install
+
+7.3 Create the Frontend Environment File
+
+Inside frontend, create or verify the file:
+- .env
+
+Its content should be:
+
+VITE_API_BASE_URL=http://localhost:3000/api
+
+This tells the frontend to connect to the local backend.
+
+7.4 Start the Frontend
+
+Run:
+npm run dev
+
+Expected result:
+- Vite starts successfully
+- frontend runs at http://localhost:5173
+
+8. How to Run the Full Project
+
+You need two terminals open at the same time.
+
+Terminal 1: Backend
+cd C:\path\to\major_project\interior-design-nextjs
+npm install
+npm run dev -- --port 3000
+
+Terminal 2: Frontend
+cd C:\path\to\major_project\frontend
+npm install
+npm run dev
+
+Open in Browser
+Public app:
+http://localhost:5173
+
+Admin login page:
+http://localhost:5173/login
+
+9. Login Details
+
+Use these credentials:
+- Email: admin@interiordesign.com
+- Password: Admin&123!
+
+After login, the admin should be redirected to the dashboard.
+
+10. What Works After Setup
+
+After completing the setup, your friend should be able to:
+- open the Designova public website
+- browse projects
+- browse rooms
+- browse the stock image gallery
+- submit enquiries
+- log in as admin
+- open the dashboard
+- manage projects
+- view enquiries
+- view testimonials
+
+Important note:
+- the current /images page shows stock images from the frontend code
+- it does not depend on database image records for public display
+- however, the design_images table is still part of the backend schema and should remain in the database
+
+11. Build Commands
+
+If your friend wants to create production builds:
+
+Backend Build
+cd C:\path\to\major_project\interior-design-nextjs
+npm install
+npm run build
+npm run start -- --port 3000
+
+Frontend Build
+cd C:\path\to\major_project\frontend
+npm install
+npm run build
+npm run preview
+
+12. Common Problems and Fixes
+
+Problem 1: Frontend loads but API calls fail
+
+Possible reasons:
+- backend is not running
+- backend is running on the wrong port
+- frontend .env has the wrong API base URL
+
+Fix:
+1. make sure backend is running on 3000
+2. verify:
+VITE_API_BASE_URL=http://localhost:3000/api
+
+Problem 2: CORS error in browser console
+
+The backend currently allows:
+- http://localhost:5173
+
+If the frontend runs on a different port, update:
+- interior-design-nextjs/lib/cors.ts
+
+Current allowed dev origin:
+"http://localhost:5173"
+
+If needed, change it and restart the backend.
+
+Problem 3: MySQL connection error
+
+Possible reasons:
+- wrong MySQL username
+- wrong MySQL password
+- database not created
+- .env.local is missing or wrong
+
+Fix:
+Check the backend env file:
+
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=YOUR_MYSQL_PASSWORD
+DB_NAME=interior_design_db
+JWT_SECRET=change-this-to-a-long-random-secret
+
+Problem 4: Login fails even though the site opens
+
+Possible reasons:
+- admin user was not inserted
+- inserted password hash is wrong
+- user role is not admin
+
+Fix:
+Run:
+SELECT user_id, name, email, role FROM users WHERE email = 'admin@interiordesign.com';
+
+The role must be admin.
+
+Problem 5: Frontend builds but backend APIs still fail
+
+Check:
+- database is imported correctly
+- all schema tables exist
+- backend terminal shows no DB error
+
+Run this in MySQL:
+SHOW TABLES;
+
+Expected tables:
+- users
+- projects
+- rooms
+- design_images
+- enquiries
+- testimonials
+
+13. Recommended First-Time Verification Checklist
+
+After setup, verify these in order:
+1. MySQL server is running
+2. Database interior_design_db exists
+3. Tables are created
+4. Admin user exists
+5. Backend runs on http://localhost:3000
+6. Frontend runs on http://localhost:5173
+7. Public homepage opens
+8. /images page opens and shows stock images
+9. /login opens
+10. Admin login works
+11. Dashboard opens
+12. Enquiry submission works
+
+14. Exact Quick Start Commands
+
+If everything is already copied and MySQL is installed, this is the shortest working flow.
+
+Backend
+cd C:\path\to\major_project\interior-design-nextjs
+npm install
+
+Create .env.local:
+
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=YOUR_MYSQL_PASSWORD
+DB_NAME=interior_design_db
+JWT_SECRET=change-this-to-a-long-random-secret
+
+Run:
+npm run dev -- --port 3000
+
+Frontend
+cd C:\path\to\major_project\frontend
+npm install
+npm run dev
+
+Browser
+http://localhost:5173
+http://localhost:5173/login
+
+15. Final Notes
+
+- Keep both backend and frontend terminals running during development
+- Do not change the backend port unless you also update the frontend API URL
+- Do not skip the admin insert query
+- Use MySQL 8 if possible because the schema uses MySQL 8 compatible defaults
+- If you share this project again, do not share your own real database password in .env files
